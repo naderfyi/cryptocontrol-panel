@@ -13,11 +13,7 @@ This is a Flask webhook app for Binance and Bybit both Spot and Futures. The app
 
 * You will also need to generate an API key for the Binance and Bybit exchanges.
 * You will need to have a Postgres database setup and the Python libraries installed:
-> Python 3.6+
-> Flask
-> psycopg2
-> binance-python
-> bybit
+> Python 3.6+, Flask, psycopg2, binance-python, bybit
 
 ## Installation
 
