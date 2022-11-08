@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="static/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="static/style.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/> <!--Replace with your tailwind.css once created-->
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+    <title>Crypto Dashboard</title>
+  </head>
+  <body style = "background: url(https://i.pinimg.com/736x/4a/7d/90/4a7d9007b984443543e4780f0149faa7.jpg);
+                 background-size: contain;
+                 background-repeat: no-repeat;">
+
+    <!-- top navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#sidebar"
+          aria-controls="offcanvasExample"
+        >
+          <span class="navbar-toggler-icon" data-bs-target="#sidebar"></span>
+        </button>
+        <a
+          class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold"
+          href="#"
+          >Crypto Dashboard</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#topNavBar"
+          aria-controls="topNavBar"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="{{ url_for('get_profile') }}"
+                role="button"
+                aria-expanded="false"
+              >
+                <i class="bi bi-person-fill"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- top navigation bar -->
+    <!-- offcanvas -->
+    <div
+      class="offcanvas offcanvas-start sidebar-nav bg-dark"
+      tabindex="-1"
+      id="sidebar"
+    >
+      <div class="offcanvas-body p-0">
+        <nav class="navbar-dark">
+          <ul class="navbar-nav">
+            <li>
+              <div class="text-muted small fw-bold text-uppercase px-3">
+                CORE
+              </div>
+            </li>
+            <li>
+              <a href="{{ url_for('gen_json') }}" class="nav-link px-3 active">
+                <span class="me-2"><i class="bi bi-list"></i></span>
+                <span>Json Generator</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('index') }}" class="nav-link px-3 active">
+                <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                <span>Binance</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('get_bybit_spot') }}" class="nav-link px-3 active">
+                <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                <span>Bybit</span>
+              </a>
+            </li>
+            </ul>
+        </nav>
+      </div>
+    </div>
+    <!-- offcanvas -->
+
+     <main class="mt-5 pt-3">
+        <div class="container">
+
+        <fieldset>
+
+        <!-- Form Name -->
+        <legend class="m-3">JSON GENERATOR</legend>
+
+        <!-- Text input-->
+        <form action="" method="post">
+        <div class="form-group">
+          <label class="col-md-4 fst-italic text-danger fw-bold control-label">If any input field is not applicable enter "0". Please do NOT keep it blank</label>
+        </div>
+
+        <form action="/json_generator" method="post">
+        <div class="form-group">
+          <label class="col-md-4 control-label">Exchange</label>
+            <div class="col-md-4 selectContainer">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+              <form action="/json_generator" method="post">
+                   <select name="exchange" class="form-control selectpicker" >
+                      <option value="none" selected disabled hidden>{{exchange_name}}</option>
+                      <option value=Binance> Binance</option>
+                      <option value=Bybit> Bybit </option>
+                   </select>
+                   <input type="submit" value="Submit">
+              </form>
+          </div>
+        </div>
+        </div>
+
+        <form action="/json_generator" method="post">
+        <div class="form-group">
+          <label class="col-md-4 control-label">Trade Type</label>
+            <div class="col-md-4 selectContainer">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+              <form action="/json_generator" method="post">
+                   <select name="trade_type" class="form-control selectpicker" >
+                      <option value="none" selected disabled hidden>{{trade_name}}</option>
+                      <option value=Spot> Spot</option>
+                      <option value=Futures> Futures </option>
+                   </select>
+                   <input type="submit" value="Submit">
+              </form>
+          </div>
+        </div>
+        </div>
+
+        <form action="/json_generator" method="post">
+        <div class="form-group">
+          <label class="col-md-4 control-label">Base coin</label>
+            <div class="col-md-4 selectContainer">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+              <form action="/json_generator" method="post">
+                   <select name="base_coin" class="form-control selectpicker" >
+                      <option value="none" selected disabled hidden>{{base_coin_name}}</option>
+                      <option value=USDT> USDT</option>
+                      <option value=BNB> BNB </option>
+                      <option value=BTC> BTC</option>
+                      <option value=BUSD> BUSD </option>
+                      <option value=ETH> ETH </option>
+                   </select>
+                   <input type="submit" value="Submit">
+              </form>
+          </div>
+        </div>
+        </div>
+
+        <form class="well form-horizontal" action="/copy_msg" method="post"  id="contact_form">
+        <div class="form-group">
+          <label class="col-md-4 control-label">Coin Pair</label>
+            <div class="col-md-4 selectContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+            <select name="coin_pair" class="form-control selectpicker" >
+              <option value=" " >Select Coin Pair</option>
+              {% for coin in coin_list %}
+              <option value={{coin}}> {{coin}} </option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label">Entry Order Type</label>
+            <div class="col-md-4 selectContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+            <select name="entry_type" class="form-control selectpicker" >
+              <option value=" " >Select Entry Order Type</option>
+              <option value=Market> Market</option>
+              <option value=Limit> Limit</option>
+            </select>
+          </div>
+        </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label">Exit Order Type</label>
+            <div class="col-md-4 selectContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+            <select name="exit_type" class="form-control selectpicker" >
+              <option value=" " >Select Exit Order Type</option>
+              <option value=Market> Market</option>
+              <option value=Limit> Limit</option>
+            </select>
+          </div>
+        </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label">Margin Mode</label>
+            <div class="col-md-4 selectContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+            <select name="margin_mode" class="form-control selectpicker" >
+              <option value=" " >Select Margin Mode</option>
+              <option value=Isolated> Isolated</option>
+              <option value=Cross> Cross</option>
+            </select>
+          </div>
+        </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label">Trading Amount Type</label>
+            <div class="col-md-4 selectContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+            <select name="amt_type" class="form-control selectpicker" >
+              <option value=" " >Select Type of Trading Amount</option>
+              <option value=Percentage of Balance> Percentage of Balance</option>
+              <option value=Fixed Amount (Base coin)> Fixed Amount (Base coin)</option>
+            </select>
+          </div>
+        </div>
+        </div>
+
+
+        <!-- Text input-->
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Percent or Base Coin Amount</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="enter_amt" placeholder="Enter Percent or Base Coin Amount" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Long Leverage</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="long_lev" placeholder="Enter Long Leverage" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Short Leverage</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="short_lev" placeholder="Enter Short Leverage" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Stop Loss LONG%</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="long_sl" placeholder="Enter Long Stop Loss% (Eg: 20)" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Take Profit LONG%</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="long_tp" placeholder="Enter Long Take Profit% (Eg: 20)" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Stop Loss SHORT%</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="short_sl" placeholder="Enter Short Stop Loss% (Eg: 20)" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Take Profit SHORT%</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="short_tp" placeholder="Enter Short Take Profit% (Eg: 20)" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label">Enable Multi Take Profit</label>
+            <div class="col-md-4 selectContainer">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+            <select name="multi_tp" class="form-control selectpicker" >
+              <option value=" " >Enable Multi Take Profit</option>
+              <option value=Yes> Yes</option>
+              <option value=No> No</option>
+            </select>
+          </div>
+        </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Take Profit 1 position size</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="tp1_pos_size" placeholder="Enter Tp 1 position size (Eg: 20)" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Take Profit 2 position size</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="tp2_pos_size" placeholder="Enter Tp 2 position size (Eg: 20)" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Take Profit 3 position size</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="tp3_pos_size" placeholder="Enter Tp 3 position size (Eg: 20)" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Take Profit 1%</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="tp1_percent" placeholder="Enter Tp 1% (Eg: 20)" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Take Profit 2%</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="tp2_percent" placeholder="Enter Tp 2% (Eg: 20)" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Take Profit 3%</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="tp3_percent" placeholder="Enter Tp 3% (Eg: 20)" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Stop Trade if base coin balance is below</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="stop_bot" placeholder="Stop Trade if balance is below (Base Coin Amt)" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Cancel Order if not filled within</label>
+            <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="time_out" placeholder="Cancel Order if not filled within (Secs)" class="form-control"  type="text">
+            </div>
+          </div>
+        </div>
+
+
+<!--        <div class="form-group">-->
+<!--          <label class="col-md-4 control-label">Alert Type</label>-->
+<!--            <div class="col-md-4 selectContainer">-->
+<!--            <div class="input-group">-->
+<!--                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>-->
+<!--            <select name="alert_type" class="form-control selectpicker" >-->
+<!--              <option value=" " >Select Alert Type (Position)</option>-->
+<!--              <option>Enter Long</option>-->
+<!--              <option>Exit Long</option>-->
+<!--              <option>Enter Short</option>-->
+<!--              <option>Exit Short</option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        </div>-->
+
+        <!-- Button -->
+        <div class="form-group">
+          <label class="col-md-4 control-label"></label>
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-warning" >Generate Json<span class="glyphicon glyphicon-send"></span></button>
+          </div>
+        </div>
+
+        </fieldset>
+        </form>
+        </div>
+            </div><!-- /.container -->
+     </main>
+  </body>
+</html>

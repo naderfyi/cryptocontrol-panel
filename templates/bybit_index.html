@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="static/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="static/style.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/> <!--Replace with your tailwind.css once created-->
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+    <title>Crypto Dashboard</title>
+  </head>
+  <body>
+    <!-- top navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#sidebar"
+          aria-controls="offcanvasExample"
+        >
+          <span class="navbar-toggler-icon" data-bs-target="#sidebar"></span>
+        </button>
+        <a
+          class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold"
+          href="#"
+          >Crypto Dashboard</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#topNavBar"
+          aria-controls="topNavBar"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="{{ url_for('get_profile') }}"
+                role="button"
+                aria-expanded="false"
+              >
+                <i class="bi bi-person-fill"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- top navigation bar -->
+    <!-- offcanvas -->
+    <div
+      class="offcanvas offcanvas-start sidebar-nav bg-dark"
+      tabindex="-1"
+      id="sidebar"
+    >
+      <div class="offcanvas-body p-0">
+        <nav class="navbar-dark">
+          <ul class="navbar-nav">
+            <li>
+              <div class="text-muted small fw-bold text-uppercase px-3">
+                CORE
+              </div>
+            </li>
+            <li>
+              <a href="{{ url_for('gen_json') }}" class="nav-link px-3 active">
+                <span class="me-2"><i class="bi bi-list"></i></span>
+                <span>Json Generator</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('index') }}" class="nav-link px-3 active">
+                <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                <span>Binance</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('get_bybit_spot') }}" class="nav-link px-3 active">
+                <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                <span>Bybit</span>
+              </a>
+            </li>
+<!--            <li class="my-4"><hr class="dropdown-divider bg-light" /></li>-->
+<!--            <li>-->
+<!--              <div class="text-muted small fw-bold text-uppercase px-3 mb-3">-->
+<!--                Interface-->
+<!--              </div>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <a-->
+<!--                class="nav-link px-3 sidebar-link"-->
+<!--                data-bs-toggle="collapse"-->
+<!--&lt;!&ndash;                href="#layouts"&ndash;&gt;-->
+<!--              >-->
+<!--                <span class="me-2"><i class="bi bi-layout-split"></i></span>-->
+<!--                <span>Layouts</span>-->
+<!--                <span class="ms-auto">-->
+<!--                  <span class="right-icon">-->
+<!--                    <i class="bi bi-chevron-down"></i>-->
+<!--                  </span>-->
+<!--                </span>-->
+<!--              </a>-->
+<!--              <div class="collapse" id="layouts">-->
+<!--                <ul class="navbar-nav ps-3">-->
+<!--                  <li>-->
+<!--                    <a href="#" class="nav-link px-3">-->
+<!--                      <span class="me-2"-->
+<!--                        ><i class="bi bi-speedometer2"></i-->
+<!--                      ></span>-->
+<!--                      <span>Dashboard</span>-->
+<!--                    </a>-->
+<!--                  </li>-->
+<!--                </ul>-->
+<!--              </div>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <a href="#" class="nav-link px-3">-->
+<!--                <span class="me-2"><i class="bi bi-book-fill"></i></span>-->
+<!--                <span>Pages</span>-->
+<!--              </a>-->
+<!--            </li>-->
+<!--            <li class="my-4"><hr class="dropdown-divider bg-light" /></li>-->
+<!--            <li>-->
+<!--              <div class="text-muted small fw-bold text-uppercase px-3 mb-3">-->
+<!--                Addons-->
+<!--              </div>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <a href="#" class="nav-link px-3">-->
+<!--                <span class="me-2"><i class="bi bi-graph-up"></i></span>-->
+<!--                <span>Charts</span>-->
+<!--              </a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <a href="#" class="nav-link px-3">-->
+<!--                <span class="me-2"><i class="bi bi-table"></i></span>-->
+<!--                <span>Tables</span>-->
+<!--              </a>-->
+<!--            </li>-->
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <!-- offcanvas -->
+    <main class="mt-5 pt-3">
+      <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+            <div class="dropdown show">
+              <a class="mt-sm-3 mb-sm-3 bg-dw btn btn-info dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Trade Type
+              </a>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="{{ url_for('get_bybit_spot') }}">Spot</a>
+                <a class="dropdown-item" href="{{ url_for('get_bybit_futures') }}">Futures</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="mb-sm-3">Bybit Spot Dashboard</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 pe-4">
+            <div class="card bg-me-d text-white h-110">
+              <h5 class="card-title">Overall Account Balance</h5>
+              <p class="card-text">{{assets}}</p>
+            </div>
+          </div>
+          <div class="col-md-3 pe-4">
+            <div class="card bg-me-m text-white h-110">
+              <h5 class="card-title">Overall Spot Balance</h5>
+              <p class="card-text">{{spot}}</p>
+            </div>
+          </div>
+          <div class="col-md-3 p3-4">
+            <div class="card bg-me-m text-white h-110">
+              <h5 class="card-title">Overall Spot PnL</h5>
+              <p class="card-text">{{pnl}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+              <h4>Charts</h4>
+              <form action="/binance_spot" method="post">
+              <label class="float-left" for="coins">Choose a coin:</label>
+                    <select name="coins" class="coins">
+                        <option value="none" selected disabled hidden>{{coin_pair_name}}</option>
+                      {% for coin in coin_list %}
+                        <option value={{coin}}> {{coin}} </option>
+                      {% endfor %}
+                    </select>
+                    <input type="submit" value="Submit">
+              </form>
+          </div>
+
+<!--                  <p>Selected option value :-->
+<!--                      <span class="op"></span>-->
+<!--                  </p>-->
+<!--                  <button onclick="selOpt()">Option check</button>-->
+<!--                  <script type="text/javascript">-->
+<!--                      function selOpt() {-->
+<!--                         selEl = document.querySelector('#s1');-->
+<!--                         op = selEl.value;-->
+<!--                         document.querySelector('.op').textContent = op;-->
+<!--                      }-->
+<!--                  </script>-->
+        </div>
+        <div class="row">
+          <!--               TradingView Widget BEGIN-->
+          <div class="col-md-8 mb-3">
+            <div class="card h-100">
+              <div class="flex flex-row flex-wrap flex-grow mt-2 h-96">
+                <div class="w-full md:w-2/2 xl:w-3/3 p-6">
+                  <div class="tradingview-widget-container h-80">
+                      <div id="tradingview_6dafb" class="h-80"></div>
+                      <div class="tradingview-widget-copyright">
+                          <a href={{modified_link}} rel="noopener" target="_blank"><span class="blue-text">{{coin_pair_name}} Chart</span></a> by TradingView
+                      </div>
+                      <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                      <script type="text/javascript">
+                        new TradingView.widget(
+                            {
+                              "autosize": true,
+                              "symbol": "{{coin_pair_name}}",
+                              "interval": "D",
+                              "timezone": "Etc/UTC",
+                              "theme": "dark",
+                              "style": "1",
+                              "locale": "en",
+                              "toolbar_bg": "#f1f3f6",
+                              "enable_publishing": false,
+                              "allow_symbol_change": true,
+                              "container_id": "tradingview_6dafb"
+                            }
+                        );
+                      </script>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="card h-100 align-items-center">
+              <div class="flex flex-row flex-wrap flex-grow mt-2 h-96">
+                <div class="md:w-2/2 xl:w-3/3 p-6">
+                    <div class="tradingview-widget-container h-80">
+                        <div class="charts">
+                            <div class="chart doughnut-chart">
+                                <h2>Asset Distribution (USD)</h2>
+
+                                <canvas id="doughnut"></canvas>
+                                <script>
+                                    var ctx2 = document.getElementById('doughnut').getContext('2d');
+                                    var myChart2 = new Chart(ctx2, {
+                                        type: 'doughnut',
+                                        data: {
+                                            labels: {{labels|tojson}},
+
+                                            datasets: [{
+                                                label: 'Employees',
+                                                data: {{values|tojson}},
+                                                backgroundColor: {{colors|tojson}},
+                                                borderColor: {{colors|tojson}},
+                                                borderWidth: 1
+                                            }]
+
+                                        },
+                                        options: {
+                                            responsive: true
+                                        }
+                                    });
+
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <div class="card">
+              <div class="card-header">
+                <span><i class="bi bi-table me-2"></i></span> Open Orders Log
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table
+                    id="example"
+                    class="table table-striped data-table"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Created Date</th>
+                        <th>Order ID</th>
+                        <th>Symbol</th
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Order Action</th>
+                        <th>Order Type</th>
+                        <th>Entry Price</th>
+                        <th>Current Price</th>
+                        <th>Pnl from Entry</th>
+                        <th>Pnl%</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in range(0,list_length) %}
+                      <tr>
+                          <td>
+                              <p>{{recentRecords[i][0]}}</p>
+                          </td>
+                          <td>
+                              <p>{{recentRecords[i][1]}}</p>
+                          </td>
+                          <td>
+                              <p>{{recentRecords[i][2]}}</p>
+                          </td>
+                          <td>
+                              <p>{{recentRecords[i][3]}}</p>
+                          </td>
+                          <td>
+                              <p>{{recentRecords[i][4]}}</p>
+                          </td>
+                          <td>
+                              <p>{{recentRecords[i][5]}}</p>
+                          </td>
+                          <td>
+                              <p>{{recentRecords[i][6]}}</p>
+                          </td>
+                          <td>
+                              <p>{{recentRecords[i][7]}}</p>
+                          </td>
+                          <td>
+                              <p>{{recentRecords[i][8]}}</p>
+                          </td>
+                          <td>
+                              <p>{{recentRecords[i][9]}}</p>
+                          </td>
+                          <td>
+                              <p>{{recentRecords[i][10]}}</p>
+                          </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Created Date</th>
+                        <th>Order ID</th>
+                        <th>Symbol</th
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Order Action</th>
+                        <th>Order Type</th>
+                        <th>Entry Price</th>
+                        <th>Current Price</th>
+                        <th>Pnl from Entry</th>
+                        <th>Pnl%</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <div class="card">
+              <div class="card-header">
+                <span><i class="bi bi-table me-2"></i></span> Trade Log
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table
+                    id="example"
+                    class="table table-striped data-table"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Created Date & Time</th>
+                        <th>Symbol</th>
+                        <th>Order ID</th>
+                        <th>Order Action</th>
+                        <th>Order Type</th>
+                        <th>Executed Price</th>
+                        <th>Executed Qty</th>
+                        <th>Execution Type</th>
+                        <th>Pnl (Sell orders only)</th>
+                        <th>Pnl %</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in range(0,trade_list_length) %}
+                      <tr>
+                          <td>
+                              <p>{{trade_recentRecords[i][0]}}</p>
+                          </td>
+                          <td>
+                              <p>{{trade_recentRecords[i][1]}}</p>
+                          </td>
+                          <td>
+                              <p>{{trade_recentRecords[i][2]}}</p>
+                          </td>
+                          <td>
+                              <p>{{trade_recentRecords[i][3]}}</p>
+                          </td>
+                          <td>
+                              <p>{{trade_recentRecords[i][4]}}</p>
+                          </td>
+                          <td>
+                              <p>{{trade_recentRecords[i][5]}}</p>
+                          </td>
+                          <td>
+                              <p>{{trade_recentRecords[i][6]}}</p>
+                          </td>
+                          <td>
+                              <p>{{trade_recentRecords[i][7]}}</p>
+                          </td>
+                          <td>
+                              <p>{{trade_recentRecords[i][8]}}</p>
+                          </td>
+                          <td>
+                              <p>{{trade_recentRecords[i][9]}}</p>
+                          </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Created Date & Time</th>
+                        <th>Symbol</th>
+                        <th>Order ID</th>
+                        <th>Order Action</th>
+                        <th>Order Type</th>
+                        <th>Executed Price</th>
+                        <th>Executed Qty</th>
+                        <th>Execution Type</th>
+                        <th>Pnl (Sell orders only)</th>
+                        <th>Pnl %</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <div class="card">
+              <div class="card-header">
+                <span><i class="bi bi-table me-2"></i></span> Errors Log
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table
+                    id="example"
+                    class="table table-striped data-table"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Error date & time</th>
+                        <th>Symbol</th>
+                        <th>Order Action</th>
+                        <th>Entry Order Type</th>
+                        <th>Exit Order Type</th>
+                        <th>Quantity</th>
+                        <th>Error description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for x in range(0,error_list_length) %}
+                      <tr>
+                          <td>
+                              <p>{{error_recentRecords[x][0]}}</p>
+                          </td>
+                          <td>
+                              <p>{{error_recentRecords[x][1]}}</p>
+                          </td>
+                          <td>
+                              <p>{{error_recentRecords[x][2]}}</p>
+                          </td>
+                          <td>
+                              <p>{{error_recentRecords[x][3]}}</p>
+                          </td>
+                          <td>
+                              <p>{{error_recentRecords[x][4]}}</p>
+                          </td>
+                          <td>
+                              <p>{{error_recentRecords[x][5]}}</p>
+                          </td>
+                          <td>
+                              <p>{{error_recentRecords[x][6]}}</p>
+                          </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Error date & time</th>
+                        <th>Symbol</th>
+                        <th>Order Action</th>
+                        <th>Entry Order Type</th>
+                        <th>Exit Order Type</th>
+                        <th>Quantity</th>
+                        <th>Error description</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     </div>
+    </main>
+    <script src="static/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
+    <script src="static/jquery-3.5.1.js"></script>
+    <script src="static/jquery.dataTables.min.js"></script>
+    <script src="static/dataTables.bootstrap5.min.js"></script>
+    <script src="static/script.js"></script>
+  </body>
+</html>

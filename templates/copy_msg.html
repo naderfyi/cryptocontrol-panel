@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="static/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="static/style.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/> <!--Replace with your tailwind.css once created-->
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <script src="static/copy_msg.js"></script>
+    <title>Crypto Dashboard</title>
+  </head>
+  <body style = "background: url(https://imagevars.gulfnews.com/2021/10/12/cryptocurrency-for-web_17c73e6c70d_large.jpg);
+                 background-size: contain;
+                 background-position: 69.33325% center;
+                 background-repeat: no-repeat;" class="my_inv">
+    <!-- top navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#sidebar"
+          aria-controls="offcanvasExample"
+        >
+          <span class="navbar-toggler-icon" data-bs-target="#sidebar"></span>
+        </button>
+        <a
+          class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold"
+          href="#"
+          >Crypto Dashboard</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#topNavBar"
+          aria-controls="topNavBar"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+         <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="{{ url_for('get_profile') }}"
+                role="button"
+                aria-expanded="false"
+              >
+                <i class="bi bi-person-fill"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- top navigation bar -->
+    <!-- offcanvas -->
+    <div
+      class="offcanvas offcanvas-start sidebar-nav bg-dark"
+      tabindex="-1"
+      id="sidebar"
+    >
+      <div class="offcanvas-body p-0">
+        <nav class="navbar-dark">
+          <ul class="navbar-nav">
+            <li>
+              <div class="text-muted small fw-bold text-uppercase px-3">
+                CORE
+              </div>
+            </li>
+            <li>
+              <a href="{{ url_for('gen_json') }}" class="nav-link px-3 active">
+                <span class="me-2"><i class="bi bi-list"></i></span>
+                <span>Json Generator</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('index') }}" class="nav-link px-3 active">
+                <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                <span>Binance</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('get_bybit_spot') }}" class="nav-link px-3 active">
+                <span class="me-2"><i class="bi bi-speedometer2"></i></span>
+                <span>Bybit</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <!-- offcanvas -->
+    <main class="mt-5 pt-3">
+        <div class="container">
+<!--<div class="page-content page-container" id="page-content">-->
+        <div class="padding">
+        <div class="row container d-flex justify-content-center">
+<!--<div class="col-12 grid-margin">-->
+              <div class="card">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card-body">
+                      <h3 class="card-title">Webhook url</h3>
+                      <h5>Webhook: <span class="label label-default"</span></h5>
+                      <input type="text" id="clipboardExample1" class="form-control" value="http://3.126.245.49/webhook">
+                      <div class="mt-5">
+                        <button type="button" class="btn btn-info btn-clipboard" data-clipboard-action="copy" data-clipboard-target="#clipboardExample1">Copy</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            </div>
+              </div>
+            </div>
+<!--<div class="page-content page-container" id="page-content2">-->
+        <div class="container">
+        <div class="padding">
+        <div class="row container d-flex justify-content-center">
+<!--<div class="col-12 grid-margin">-->
+              <div class="card">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card-body">
+                      <h3 class="card-title">JSON Message</h3>
+                      <h5>Enter Long Json: <span class="label label-default"</span></h5>
+                      <input type="text" id="clipboardExample2" rows="6" class="form-control-2" value={{exchange1}}:"{{exchange2}}","{{trade_type1}}":"{{trade_type2}}","{{base_coin1}}":"{{base_coin2}}","{{coin_pair1}}":"{{coin_pair2}}","{{entry_type1}}":"{{entry_type2}}","{{exit_type1}}":"{{exit_type2}}","{{margin_mode1}}":"{{margin_mode2}}","{{amt_type1}}":"{{amt_type2}}","{{enter_amt1}}":"{{enter_amt2}}","{{long_lev1}}":"{{long_lev2}}","{{short_lev1}}":"{{short_lev2}}","{{long_sl1}}":"{{long_sl2}}","{{long_tp1}}":"{{long_tp2}}","{{short_sl1}}":"{{short_sl2}}","{{short_tp1}}":"{{short_tp2}}","{{multi_tp1}}":"{{multi_tp2}}","{{tp1_pos_size1}}":"{{tp1_pos_size2}}","{{tp2_pos_size1}}":"{{tp2_pos_size2}}","{{tp3_pos_size1}}":"{{tp3_pos_size2}}","{{tp1_percent1}}":"{{tp1_percent2}}","{{tp2_percent1}}":"{{tp2_percent2}}","{{tp3_percent1}}":"{{tp3_percent2}}","{{stop_bot1}}":"{{stop_bot2}}","{{time_out1}}":"{{time_out2}}","{{enterlong1}}":{{enterlong2}}>
+                      <div class="mt-5">
+                        <button type="button" class="btn btn-info btn-clipboard" data-clipboard-action="copy" data-clipboard-target="#clipboardExample2">Copy</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card-body">
+                      <h3 class="card-title">JSON Message</h3>
+                      <h5>Enter Short Json: <span class="label label-default"</span></h5>
+                      <input type="text" id="clipboardExample3" rows="6" class="form-control-2" value={{exchange1}}:"{{exchange2}}","{{trade_type1}}":"{{trade_type2}}","{{base_coin1}}":"{{base_coin2}}","{{coin_pair1}}":"{{coin_pair2}}","{{entry_type1}}":"{{entry_type2}}","{{exit_type1}}":"{{exit_type2}}","{{margin_mode1}}":"{{margin_mode2}}","{{amt_type1}}":"{{amt_type2}}","{{enter_amt1}}":"{{enter_amt2}}","{{long_lev1}}":"{{long_lev2}}","{{short_lev1}}":"{{short_lev2}}","{{long_sl1}}":"{{long_sl2}}","{{long_tp1}}":"{{long_tp2}}","{{short_sl1}}":"{{short_sl2}}","{{short_tp1}}":"{{short_tp2}}","{{multi_tp1}}":"{{multi_tp2}}","{{tp1_pos_size1}}":"{{tp1_pos_size2}}","{{tp2_pos_size1}}":"{{tp2_pos_size2}}","{{tp3_pos_size1}}":"{{tp3_pos_size2}}","{{tp1_percent1}}":"{{tp1_percent2}}","{{tp2_percent1}}":"{{tp2_percent2}}","{{tp3_percent1}}":"{{tp3_percent2}}","{{stop_bot1}}":"{{stop_bot2}}","{{time_out1}}":"{{time_out2}}","{{entershort1}}":{{entershort2}}>
+                      <div class="mt-5">
+                        <button type="button" class="btn btn-info btn-clipboard" data-clipboard-action="copy" data-clipboard-target="#clipboardExample3">Copy</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card-body">
+                      <h3 class="card-title">JSON Message</h3>
+                      <h5>Exit Long Json: <span class="label label-default"</span></h5>
+                      <input type="text" id="clipboardExample4" rows="6" class="form-control-2" value={{exchange1}}:"{{exchange2}}","{{trade_type1}}":"{{trade_type2}}","{{base_coin1}}":"{{base_coin2}}","{{coin_pair1}}":"{{coin_pair2}}","{{entry_type1}}":"{{entry_type2}}","{{exit_type1}}":"{{exit_type2}}","{{margin_mode1}}":"{{margin_mode2}}","{{amt_type1}}":"{{amt_type2}}","{{enter_amt1}}":"{{enter_amt2}}","{{long_lev1}}":"{{long_lev2}}","{{short_lev1}}":"{{short_lev2}}","{{long_sl1}}":"{{long_sl2}}","{{long_tp1}}":"{{long_tp2}}","{{short_sl1}}":"{{short_sl2}}","{{short_tp1}}":"{{short_tp2}}","{{multi_tp1}}":"{{multi_tp2}}","{{tp1_pos_size1}}":"{{tp1_pos_size2}}","{{tp2_pos_size1}}":"{{tp2_pos_size2}}","{{tp3_pos_size1}}":"{{tp3_pos_size2}}","{{tp1_percent1}}":"{{tp1_percent2}}","{{tp2_percent1}}":"{{tp2_percent2}}","{{tp3_percent1}}":"{{tp3_percent2}}","{{stop_bot1}}":"{{stop_bot2}}","{{time_out1}}":"{{time_out2}}","{{exitlong1}}":{{exitlong2}}>
+                      <div class="mt-5">
+                        <button type="button" class="btn btn-info btn-clipboard" data-clipboard-action="copy" data-clipboard-target="#clipboardExample4">Copy</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card-body">
+                      <h3 class="card-title">JSON Message</h3>
+                      <h5>Exit Short Json: <span class="label label-default"</span></h5>
+                      <input type="text" id="clipboardExample5" rows="6" class="form-control-2" value={{exchange1}}:"{{exchange2}}","{{trade_type1}}":"{{trade_type2}}","{{base_coin1}}":"{{base_coin2}}","{{coin_pair1}}":"{{coin_pair2}}","{{entry_type1}}":"{{entry_type2}}","{{exit_type1}}":"{{exit_type2}}","{{margin_mode1}}":"{{margin_mode2}}","{{amt_type1}}":"{{amt_type2}}","{{enter_amt1}}":"{{enter_amt2}}","{{long_lev1}}":"{{long_lev2}}","{{short_lev1}}":"{{short_lev2}}","{{long_sl1}}":"{{long_sl2}}","{{long_tp1}}":"{{long_tp2}}","{{short_sl1}}":"{{short_sl2}}","{{short_tp1}}":"{{short_tp2}}","{{multi_tp1}}":"{{multi_tp2}}","{{tp1_pos_size1}}":"{{tp1_pos_size2}}","{{tp2_pos_size1}}":"{{tp2_pos_size2}}","{{tp3_pos_size1}}":"{{tp3_pos_size2}}","{{tp1_percent1}}":"{{tp1_percent2}}","{{tp2_percent1}}":"{{tp2_percent2}}","{{tp3_percent1}}":"{{tp3_percent2}}","{{stop_bot1}}":"{{stop_bot2}}","{{time_out1}}":"{{time_out2}}","{{exitshort1}}":{{exitshort2}}>
+                      <div class="mt-5">
+                        <button type="button" class="btn btn-info btn-clipboard" data-clipboard-action="copy" data-clipboard-target="#clipboardExample5">Copy</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+            </div>
+              </div>
+            </div>
+    </main>
+</body>
+</html>
+

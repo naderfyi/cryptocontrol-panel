@@ -1,0 +1,296 @@
+---------simple commands to install postgresql-----
+
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+sudo -u postgres psql postgres
+ALTER USER postgres WITH PASSWORD 'postgres';
+
+---------------------------------------------------
+
+installing postgres locally -->
+https://www.digitalocean.com/community/tutorials/how-to-install-postgresql-on-ubuntu-20-04-quickstart
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+
+To reset the password if you have forgotten:
+ALTER USER user_name WITH PASSWORD 'new_password';
+
+sudo -u postgres psql postgres    -> to initial login
+sudo -u postgres psql gpu    <- syntax
+
+\l -> list all available dbs
+\c -> select a databse
+\dt -> get all tables
+create database gpu;
+
+
+---------------------------------- actual script
+
+create database gpu;
+\l
+\c gpu;
+
+CREATE TABLE ips (
+	id serial PRIMARY KEY,
+	ip VARCHAR ( 50 ) NOT NULL,
+	datetime TIMESTAMP NOT NULL
+);
+
+
+
+CREATE TABLE error_log (
+	occured_time TIMESTAMP,
+	symbol TEXT,
+	order_action TEXT,
+	entry_order_type TEXT,
+	exit_order_type TEXT,
+	quantity NUMERIC,
+	error_description TEXT
+);
+
+CREATE TABLE id_list (
+	order_id BIGINT NOT NULL,
+	entry_price NUMERIC NOT NULL,
+	total_spend NUMERIC
+);
+
+
+CREATE TABLE f_id_list (
+	order_id BIGINT NOT NULL,
+	entry_price NUMERIC NOT NULL,
+	qty NUMERIC
+);
+
+CREATE TABLE s_id_list (
+	order_id BIGINT NOT NULL,
+	entry_price NUMERIC NOT NULL
+);
+
+CREATE TABLE open_orders (
+	created_date DATE,
+	order_id BIGINT,
+	symbol TEXT,
+	price NUMERIC,
+	quantity NUMERIC,
+	order_action TEXT,
+	order_type TEXT,
+	entry_price NUMERIC,
+	current_price NUMERIC,
+	pnl NUMERIC,
+	pnl_per TEXT
+);
+
+CREATE TABLE trade_log (
+	date_time TIMESTAMP,
+	order_id BIGINT,
+	symbol TEXT,
+	order_action TEXT,
+	order_type TEXT,
+	executed_price NUMERIC,
+	executed_qty NUMERIC,
+	execution TEXT,
+	pnl NUMERIC,
+	percentage TEXT
+);
+
+CREATE TABLE futures_e_log (
+	occured_time TIMESTAMP,
+	symbol TEXT,
+	order_action TEXT,
+	entry_order_type TEXT,
+	exit_order_type TEXT,
+	quantity NUMERIC,
+	error_description TEXT
+);
+
+CREATE TABLE futures_t_log (
+	date_time TIMESTAMP,
+	order_id BIGINT,
+	symbol TEXT,
+	order_action TEXT,
+	order_type TEXT,
+	executed_price NUMERIC,
+	executed_qty NUMERIC,
+	execution TEXT,
+	pnl NUMERIC
+);
+
+CREATE TABLE long_entry (
+	order_id BIGINT,
+	entry_price NUMERIC,
+	total_spend NUMERIC,
+	symbol TEXT,
+	qty NUMERIC
+);
+
+CREATE TABLE short_entry (
+	order_id BIGINT,
+	entry_price NUMERIC,
+	total_spend NUMERIC,
+	symbol TEXT,
+	qty NUMERIC
+);
+
+CREATE TABLE f_o_positions (
+	created_date DATE,
+	symbol TEXT,
+	side TEXT,
+	entry_price NUMERIC,
+	current_price NUMERIC,
+	liq_price NUMERIC,
+	margin_type TEXT,
+	leverage BIGINT,
+	quantity NUMERIC,
+	pnl NUMERIC
+);
+
+CREATE TABLE f_o_orders (
+	created_date DATE,
+	order_id BIGINT,
+	symbol TEXT,
+	price NUMERIC,
+	quantity NUMERIC,
+	order_action TEXT,
+	order_type TEXT,
+	entry_price NUMERIC,
+	current_price NUMERIC,
+	pnl NUMERIC,
+	pnl_per TEXT
+);
+
+CREATE TABLE binance_keys (
+	api_key TEXT,
+	api_secret TEXT
+);
+
+
+CREATE TABLE bybit_keys (
+	api_key TEXT,
+	api_secret TEXT
+);
+
+
+CREATE TABLE bybit_error_log (
+	occured_time TIMESTAMP,
+	symbol TEXT,
+	order_action TEXT,
+	entry_order_type TEXT,
+	exit_order_type TEXT,
+	quantity NUMERIC,
+	error_description TEXT
+);
+
+
+CREATE TABLE bybit_f_id_list (
+	order_id CHARACTER VARYING NOT NULL,
+	entry_price NUMERIC NOT NULL,
+	qty NUMERIC
+);
+
+CREATE TABLE bybit_s_id_list (
+	order_id BIGINT NOT NULL,
+	entry_price NUMERIC NOT NULL
+);
+
+CREATE TABLE bybit_open_orders (
+	created_date DATE,
+	order_id BIGINT,
+	symbol TEXT,
+	price NUMERIC,
+	quantity NUMERIC,
+	order_action TEXT,
+	order_type TEXT,
+	entry_price NUMERIC,
+	current_price NUMERIC,
+	pnl NUMERIC,
+	pnl_per TEXT
+);
+
+CREATE TABLE bybit_trade_log (
+	date_time TIMESTAMP,
+	order_id BIGINT,
+	symbol TEXT,
+	order_action TEXT,
+	order_type TEXT,
+	executed_price NUMERIC,
+	executed_qty NUMERIC,
+	execution TEXT,
+	pnl NUMERIC,
+	percentage TEXT
+);
+
+CREATE TABLE bybit_futures_e_log (
+	occured_time TIMESTAMP,
+	symbol TEXT,
+	order_action TEXT,
+	entry_order_type TEXT,
+	exit_order_type TEXT,
+	quantity NUMERIC,
+	error_description TEXT
+);
+
+CREATE TABLE bybit_futures_t_log (
+	date_time TIMESTAMP,
+	order_id CHARACTER VARYING,
+	symbol TEXT,
+	order_action TEXT,
+	order_type TEXT,
+	executed_price NUMERIC,
+	executed_qty NUMERIC,
+	execution TEXT,
+	pnl NUMERIC
+);
+
+CREATE TABLE bybit_long_entry (
+	order_id BIGINT,
+	entry_price NUMERIC,
+	total_spend NUMERIC,
+	symbol TEXT,
+	qty NUMERIC
+);
+
+CREATE TABLE bybit_short_entry (
+	order_id BIGINT,
+	entry_price NUMERIC,
+	total_spend NUMERIC,
+	symbol TEXT,
+	qty NUMERIC
+);
+
+CREATE TABLE bybit_f_o_positions (
+	symbol TEXT,
+	side TEXT,
+	entry_price NUMERIC,
+	current_price NUMERIC,
+	liq_price NUMERIC,
+	margin_type TEXT,
+	leverage BIGINT,
+	quantity NUMERIC,
+	pnl NUMERIC
+);
+
+CREATE TABLE bybit_f_o_orders (
+	order_id CHARACTER VARYING,
+	symbol TEXT,
+	price NUMERIC,
+	quantity NUMERIC,
+	order_action TEXT,
+	order_type TEXT,
+	entry_price NUMERIC,
+	current_price NUMERIC,
+	pnl NUMERIC,
+	pnl_per TEXT
+);
+
+CREATE TABLE bybit_futures_pnl_log (
+	symbol TEXT,
+	side TEXT,
+	pnl NUMERIC
+);
+
+
+
+CREATE TABLE bybit_futures_coin_pairs (
+	pair TEXT
+);
+
