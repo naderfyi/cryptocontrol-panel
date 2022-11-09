@@ -22,8 +22,8 @@ app.secret_key = "Notofomo'sdash"
 api_key = ""
 api_secret = ""
 
-dash_user_name = "tradernb"
-dash_password = "NoToFOMO123"
+dash_user_name = "pick_a_username"
+dash_password = "pick_a_password"
 
 colors = [
     "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA",
